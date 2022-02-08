@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.hqf.tutorials.java</groupId>
+    <groupId>org.hqf.tutorials.java.algorithm</groupId>
     <artifactId>hqf-tutorials-java-algorithm</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
@@ -12,6 +12,7 @@
         <module>LRU</module>
         <module>String-process</module>
         <module>number-process</module>
+        <module>search-algorithm</module>
     </modules>
 
     <properties>
