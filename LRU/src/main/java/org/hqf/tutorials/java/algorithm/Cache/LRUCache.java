@@ -2,7 +2,7 @@
 package org.hqf.tutorials.java.algorithm.Cache;
 
 import java.util.Hashtable;
-/*
+/**
 基于双链表 的LRU实现:
 
 　　传统意义的LRU算法是为每一个Cache对象设置一个计数器，每次Cache命中则给计数器+1，而Cache用完，需要淘汰旧内容，放置新内容时，就查看所有的计数器，并将最少使用的内容替换掉。
@@ -18,14 +18,17 @@ import java.util.Hashtable;
   上面说了这么多的理论， 下面用代码来实现一个LRU策略的缓存。
 
     我们用一个对象来表示Cache，并实现双链表，
-* */
+**/
 public class LRUCache {
     private int cacheSize;
     private int currentSize;
 
-    private Hashtable nodes;//缓存容器
-    private CacheNode first;//链表头
-    private CacheNode last;//链表尾
+    //缓存容器
+    private Hashtable nodes;
+    //链表头
+    private CacheNode first;
+    //链表尾
+    private CacheNode last;
 
     public LRUCache(int i) {
         currentSize = 0;
@@ -59,8 +62,10 @@ public class LRUCache {
         if (node == null) {
             //缓存容器是否已经超过大小.
             if (currentSize >= cacheSize) {
-                if (last != null)//将最少使用的删除
+                //将最少使用的删除
+                if (last != null) {
                     nodes.remove(last.key);
+                }
                 removeLast();
             } else {
                 currentSize++;
@@ -83,16 +88,18 @@ public class LRUCache {
     public Object remove(Object key) {
         CacheNode node = (CacheNode) nodes.get(key);
         if (node != null) {
-            if (node.prev != null) {
+            if (null != node.prev) {
                 node.prev.next = node.next;
             }
-            if (node.next != null) {
+            if (null != node.next) {
                 node.next.prev = node.prev;
             }
-            if (last == node)
+            if (node == last) {
                 last = node.prev;
-            if (first == node)
+            }
+            if (first == node) {
                 first = node.next;
+            }
         }
         return node;
     }
@@ -109,10 +116,11 @@ public class LRUCache {
     private void removeLast() {
         //链表尾不为空,则将链表尾指向null. 删除连表尾（删除最少使用的缓存对象）
         if (last != null) {
-            if (last.prev != null)
+            if (last.prev != null) {
                 last.prev.next = null;
-            else
+            } else {
                 first = null;
+            }
             last = last.prev;
         }
     }
@@ -122,22 +130,27 @@ public class LRUCache {
      * @param node
      */
     private void moveToHead(CacheNode node) {
-        if (node == first)
+        if (node == first) {
             return;
-        if (node.prev != null)
+        }
+        if (null != node.prev) {
             node.prev.next = node.next;
-        if (node.next != null)
+        }
+        if (null != node.next) {
             node.next.prev = node.prev;
-        if (last == node)
+        }
+        if (last == node) {
             last = node.prev;
-        if (first != null) {
+        }
+        if (null != first) {
             node.next = first;
             first.prev = node;
         }
         first = node;
         node.prev = null;
-        if (last == null)
+        if (null == last) {
             last = first;
+        }
     }
 
     /**
