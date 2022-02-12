@@ -1,5 +1,6 @@
 package org.hqf.tutorials.java.algorithm;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,6 +14,32 @@ public class SubStr {
         int subStrLength = getLengthOfLongestSubstring(str);
         System.out.println("subStrLength = " + subStrLength);
 
+        subStrLength = getLengthOfLongestSubstring2(str);
+        System.out.println("subStrLength = " + subStrLength);
+
+    }
+
+    /**
+     * 获取最长不重复子串的长度
+     *
+     * @param s
+     * @return
+     */
+    public static int getLengthOfLongestSubstring2(String s) {
+        HashMap<Character, Integer> map = new HashMap<>();
+        int count = s.length();
+        int subLength = 0;
+
+        for (int  left = 0,right = 0; right < count; right++) {
+
+            if (map.containsKey(s.charAt(right))) {
+                left = Math.max(left, map.get(s.charAt(right))) + 1;
+            }
+            map.put(s.charAt(right), right);
+
+            subLength = Math.max(subLength, right - left + 1);
+        }
+        return subLength;
     }
 
     /**
